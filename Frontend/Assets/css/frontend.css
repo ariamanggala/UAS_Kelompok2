@@ -1,0 +1,486 @@
+:root {
+  --color-primer: #3142ff;
+  --color-secondary: #e6e6e6;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.navbar .nav-link {
+  background-image: linear-gradient(to right, var(--color-primer), var(--color-primer) 50%, #000 50%);
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 4px 0;
+  position: relative;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+}
+.navbar .nav-link:before {
+  content: "";
+  background: var(--color-primer);
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.5s ease-in-out;
+}
+.navbar .nav-link:hover::before {
+  width: 100%;
+}
+.navbar a {
+  text-decoration: none;
+  color: inherit;
+}
+.navbar .navbar-profile .img-profile {
+  width: 45px;
+  height: 45px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.navbar .navbar-profile .username {
+  background-image: linear-gradient(to right, var(--color-primer), var(--color-primer) 50%, #000 50%);
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 4px 0;
+  position: relative;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-size: 0.9rem;
+}
+.navbar .navbar-profile .username:before {
+  content: "";
+  background: var(--color-primer);
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.5s ease-in-out;
+}
+.navbar .navbar-profile .username:hover::before {
+  width: 100%;
+}
+
+#Header .header-title {
+  text-transform: uppercase;
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 60px;
+}
+#Header .header-first {
+  border-radius: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 470px 165px 120px 188px rgba(12, 10, 10, 0.59);
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 35px 30px;
+  gap: 10px;
+}
+#Header .header-first h4 {
+  color: #fff;
+  font-weight: 500;
+  font-size: 2rem;
+}
+#Header .header-first h5 {
+  color: #fff;
+  font-weight: 300;
+  font-size: 1rem;
+}
+#Header .header-first .button {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.45rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-decoration: none;
+}
+#Header .header-first .button:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primer);
+  border-radius: 0.45rem;
+  z-index: -2;
+}
+#Header .header-first .button:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #0011ca;
+  transition: all 0.3s;
+  border-radius: 0.45rem;
+  z-index: -1;
+}
+#Header .header-first .button:hover {
+  color: #fff;
+}
+#Header .header-first .button:hover:before {
+  width: 100%;
+}
+#Header .header-second {
+  border-radius: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset -27px -113px 69px 206px rgba(0, 0, 0, 0.46);
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 35px 30px;
+  gap: 10px;
+}
+#Header .header-second h4 {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-align: center;
+}
+#Header .header-second h5 {
+  color: #fff;
+  font-weight: 300;
+  font-size: 0.8rem;
+  text-align: center;
+}
+#Header .header-second .button {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.45rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-decoration: none;
+}
+#Header .header-second .button:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primer);
+  border-radius: 0.45rem;
+  z-index: -2;
+}
+#Header .header-second .button:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #0011ca;
+  transition: all 0.3s;
+  border-radius: 0.45rem;
+  z-index: -1;
+}
+#Header .header-second .button:hover {
+  color: #fff;
+}
+#Header .header-second .button:hover:before {
+  width: 100%;
+}
+
+#Brand .logo {
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 14px;
+}
+#Brand .logo .brand-link {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  color: inherit;
+}
+#Brand .logo .brand-link {
+  background: linear-gradient(to right, #3142ff, #7631ff), linear-gradient(to right, rgb(200, 255, 0), rgb(255, 0, 180), rgb(0, 100, 200));
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
+#Brand .logo .brand-link:hover {
+  background-size: 0 3px, 100% 3px;
+}
+
+#LiteCatalog .card-img {
+  overflow: hidden;
+}
+#LiteCatalog .card-img img {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.4s linear;
+}
+#LiteCatalog .card-img:hover img {
+  transform: scale(1.1);
+}
+#LiteCatalog .icon-right {
+  font-size: 1.5rem;
+}
+#LiteCatalog .link-catalog {
+  color: #000;
+  position: relative;
+  text-decoration: none;
+}
+#LiteCatalog .link-catalog::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 4px;
+  background-color: var(--color-primer);
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+#LiteCatalog .link-catalog:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+#LiteCatalog .link-catalog:hover {
+  color: var(--color-primer);
+}
+#LiteCatalog .swiper {
+  width: 100%;
+  height: 100%;
+}
+#LiteCatalog .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#LiteCatalog .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#LiteCatalog .button {
+  display: flex;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.45rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-decoration: none;
+  justify-content: center;
+}
+#LiteCatalog .button:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primer);
+  border-radius: 0.45rem;
+  z-index: -2;
+}
+#LiteCatalog .button:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #0011ca;
+  transition: all 0.3s;
+  border-radius: 0.45rem;
+  z-index: -1;
+}
+#LiteCatalog .button:hover {
+  color: #fff;
+}
+#LiteCatalog .button:hover:before {
+  width: 100%;
+}
+
+#Article .doublearticle {
+  flex-direction: column;
+}
+#Article .icon-right {
+  font-size: 1.5rem;
+}
+#Article .link-article {
+  color: #000;
+  position: relative;
+  text-decoration: none;
+}
+#Article .link-article::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 4px;
+  background-color: var(--color-primer);
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+#Article .link-article:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+#Article .link-article:hover {
+  color: var(--color-primer);
+}
+
+#SectionAbout {
+  margin-bottom: 4.5rem;
+}
+#SectionAbout .container {
+  background-color: var(--color-secondary);
+  border-radius: 1rem;
+}
+
+#Footer {
+  background-color: #000;
+}
+#Footer h1 {
+  color: #fff;
+  font-size: 3rem;
+  text-align: center;
+}
+#Footer p {
+  color: #fff;
+  text-align: center;
+  font-weight: 400;
+}
+#Footer .kontak {
+  flex-direction: column;
+}
+#Footer .kontak a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 400;
+}
+#Footer .copyright {
+  font-size: 0.5rem;
+  color: var(--color-secondary);
+  text-align: center;
+}
+
+#DetailHp .photo .swiper {
+  width: 100%;
+  height: 100%;
+}
+#DetailHp .photo .swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+#DetailHp .photo .swiper-slide img {
+  display: block;
+  width: 100%;
+}
+#DetailHp .rincian .merk {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+#DetailHp .rincian .merk .logo {
+  width: 2rem;
+  height: 2rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#DetailHp .rincian .nama_hp {
+  font-size: 3rem;
+  font-weight: 700;
+}
+#DetailHp .rincian .harga {
+  font-size: 1.6rem;
+}
+#DetailHp .rincian .stok {
+  font-size: 0.8rem;
+  color: #656671;
+}
+#DetailHp .rincian .detail {
+  gap: 1rem;
+}
+#DetailHp .rincian .button {
+  display: inline-block;
+  padding: 0.5rem 4rem;
+  border-radius: 0.45rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-decoration: none;
+}
+#DetailHp .rincian .button:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primer);
+  border-radius: 0.45rem;
+  z-index: -2;
+}
+#DetailHp .rincian .button:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #0011ca;
+  transition: all 0.3s;
+  border-radius: 0.45rem;
+  z-index: -1;
+}
+#DetailHp .rincian .button:hover {
+  color: #fff;
+}
+#DetailHp .rincian .button:hover:before {
+  width: 100%;
+}/*# sourceMappingURL=frontend.css.map */
