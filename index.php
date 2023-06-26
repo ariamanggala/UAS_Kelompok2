@@ -5,7 +5,11 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 if (isset($_SESSION['username'])) {
-  header("Location: frontend/home.php");
+  if ($_SESSION['level'] === 'Admin') {
+    header("Location: backend/");
+  } else {
+    header("Location: frontend/home.php");
+  }
   exit();
 }
 
@@ -27,9 +31,10 @@ if (isset($_POST['submit'])) {
     if ($password === $stored_password) {
       $_SESSION['username'] = $row['username'];
       $_SESSION['id_user'] = $row['id_user'];
+      $_SESSION['level'] = $level; // Menyimpan level pengguna dalam session
 
       if ($level === 'Admin') {
-        header("Location: admin.php");
+        header("Location: backend/");
       } else {
         header("Location: frontend/home.php");
       }
@@ -42,9 +47,6 @@ if (isset($_POST['submit'])) {
   }
 }
 ?>
-
-
-
 
 <!doctype html>
 <html lang="en">
