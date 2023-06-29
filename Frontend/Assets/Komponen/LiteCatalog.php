@@ -10,7 +10,7 @@
         <div class="swiper-wrapper">
           <?php
           include "./../koneksi.php";
-          $query = mysqli_query($koneksi, "SELECT * FROM data_hp INNER JOIN spek_hp ON data_hp.id_spek = spek_hp.id_spek LIMIT 5");
+          $query = mysqli_query($koneksi, "SELECT * FROM data_hp LIMIT 5");
           if ($query) {
             if (mysqli_num_rows($query) > 0) {
               while ($data = mysqli_fetch_array($query)) {

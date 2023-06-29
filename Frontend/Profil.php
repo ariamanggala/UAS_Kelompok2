@@ -5,12 +5,25 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-
 // Mendapatkan data pengguna dari tabel user berdasarkan id_user yang disimpan dalam sesi
+if (!isset($_SESSION['id_user'])) {
+  header("Location: ../index.php");
+  exit();
+}
+
 $id_user = $_SESSION['id_user'];
 $query = mysqli_query($koneksi, "SELECT * FROM user WHERE id_user = $id_user");
 $data = mysqli_fetch_assoc($query);
+
+// Perbarui data yang tersimpan di session:v
+$_SESSION['username'] = $data['username'];
+
+if (!$data) {
+  echo "Data pengguna tidak ditemukan.";
+  exit();
+}
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -47,7 +60,7 @@ $data = mysqli_fetch_assoc($query);
           <h3>Your Profile</h3>
         </div>
         <div class="col-md-7 profil d-flex justify-content-start align-items-center gap-5 bg-secondary p-2">
-          <img class="img-profile rounded-circle" src="Assets/img/<?= $data['photo'] ?>" alt="photo profile">
+          <img class="img-profile rounded-circle" src="Assets/img/<?= $data['photo'] ?>" alt="photo profile" width="200rem">
           <div class="akun">
             <div class="username d-flex gap-1">
               <h4>Username: </h4>
@@ -55,27 +68,27 @@ $data = mysqli_fetch_assoc($query);
             </div>
             <div class="password d-flex gap-1">
               <h4>Password: </h4>
-              <h4 id="password"> ********</h4>
+              <h4 id="password">********</h4>
               <button class="btn btn-secondary" onclick="togglePasswordVisibility()"><iconify-icon icon="fluent-mdl2:hide-2"></iconify-icon></button>
             </div>
-            <a href="edit_akun.php" class="btn btn-primary">Edit Akun</a>
+            <a href="editakun.php?id_user=<?php echo $id_user; ?>" class="btn btn-primary">Edit Akun</a>
             <script>
               function togglePasswordVisibility() {
                 var passwordElement = document.getElementById("password");
-                if (passwordElement.textContent === " ********") {
+                if (passwordElement.textContent === "********") {
                   passwordElement.textContent = "<?php echo $data['password']; ?>";
                 } else {
-                  passwordElement.textContent = " ********";
+                  passwordElement.textContent = "********";
                 }
               }
             </script>
           </div>
         </div>
-        <div class="col-12 data bg-secondary">
+        <div class="col-12 data_pembelian">
           <h6>Data Pembelian</h6>
-          <table class="table">
+          <table class="table table-secondary table-bordered table-striped table-hover">
             <thead>
-              <tr>
+              <tr class="table-primary">
                 <th>No</th>
                 <th>Gambar Utama</th>
                 <th>Nama HP</th>
@@ -86,23 +99,34 @@ $data = mysqli_fetch_assoc($query);
             </thead>
             <tbody>
               <?php
-              include "./../koneksi.php";
-              $id_user = $_SESSION['id_user'];
-              $query = mysqli_query($koneksi, "SELECT spek_hp.gambar_utama, data_hp.nama_hp, tb_pembelian.jumlah, tb_pembelian.status, tb_pembelian.total_harga 
-                                  FROM tb_pembelian
-                                  INNER JOIN data_hp ON tb_pembelian.Id_hp = data_hp.id_hp
-                                  INNER JOIN spek_hp ON data_hp.id_spek = spek_hp.id_spek
-                                  WHERE tb_pembelian.id_user = $id_user");
+              $query_pembelian = mysqli_query($koneksi, "SELECT data_hp.gambar_utama, data_hp.nama_hp, tb_pembelian.jumlah, tb_pembelian.status, tb_pembelian.total_harga 
+                        FROM tb_pembelian
+                        INNER JOIN data_hp ON tb_pembelian.Id_hp = data_hp.id_hp
+                        WHERE tb_pembelian.id_user = $id_user");
               $no = 1;
-              while ($data = mysqli_fetch_array($query)) {
+              while ($data_pembelian = mysqli_fetch_array($query_pembelian)) {
+                $status_class = '';
+                switch ($data_pembelian['status']) {
+                  case 'Menunggu':
+                    $status_class = 'btn-warning';
+                    break;
+                  case 'Berhasil':
+                    $status_class = 'btn-primary';
+                    break;
+                  case 'Gagal':
+                    $status_class = 'btn-danger';
+                    break;
+                }
               ?>
                 <tr>
                   <td><?php echo $no; ?></td>
-                  <td><img src="Assets/img/<?php echo $data['gambar_utama']; ?>" alt="Gambar Utama HP" width="100"></td>
-                  <td><?php echo $data['nama_hp']; ?></td>
-                  <td><?php echo $data['jumlah']; ?></td>
-                  <td><?php echo $data['status']; ?></td>
-                  <td><?php echo $data['total_harga']; ?></td>
+                  <td><img src="Assets/img/<?php echo $data_pembelian['gambar_utama']; ?>" alt="Gambar Utama HP" width="100"></td>
+                  <td><?php echo $data_pembelian['nama_hp']; ?></td>
+                  <td><?php echo $data_pembelian['jumlah']; ?></td>
+                  <td>
+                    <p class="btn <?php echo $status_class; ?>"><?php echo $data_pembelian['status']; ?></p>
+                  </td>
+                  <td><?php echo $data_pembelian['total_harga']; ?></td>
                 </tr>
               <?php
                 $no++;
@@ -122,8 +146,6 @@ $data = mysqli_fetch_assoc($query);
   include 'Assets/Komponen/Footer.php';
   ?>
   <!-- Footer END -->
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 

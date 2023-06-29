@@ -4,7 +4,21 @@ session_start();
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+
+// Pengecekan akses berdasarkan level
+if ($_SESSION['level'] === 'Admin') {
+  header("Location: ../backend/");
+  exit();
+} elseif ($_SESSION['level'] === 'User') {
+  // Tetapkan halaman home.php untuk user
+} else {
+  // Jika level tidak valid, alihkan pengguna ke halaman login
+  header("Location: ../index.php");
+  exit();
+}
+
 ?>
+
 <!doctype html>
 <html lang="en">
 

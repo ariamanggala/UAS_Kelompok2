@@ -41,9 +41,7 @@ error_reporting(E_ALL);
   $idHp = $_GET['id'];
 
   // Query untuk mendapatkan data smartphone
-  $query = mysqli_query($koneksi, "SELECT * FROM data_hp 
-                                 INNER JOIN spek_hp ON data_hp.id_spek = spek_hp.id_spek
-                                 WHERE data_hp.id_hp = $idHp");
+  $query = mysqli_query($koneksi, "SELECT * FROM data_hp WHERE id_hp = $idHp");
   $data = mysqli_fetch_array($query);
 
   // Proses pembelian

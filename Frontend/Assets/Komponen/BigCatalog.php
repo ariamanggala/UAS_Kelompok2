@@ -19,9 +19,9 @@
                     <select name="merk" id="merk" class="form-control">
                       <option value="">All Brands</option>
                       <?php
-                      $merkQuery = mysqli_query($koneksi, "SELECT DISTINCT merk FROM data_hp");
+                      $merkQuery = mysqli_query($koneksi, "SELECT DISTINCT nama_merk FROM brand");
                       while ($merkData = mysqli_fetch_array($merkQuery)) {
-                        $merkValue = $merkData['merk'];
+                        $merkValue = $merkData['nama_merk'];
                         echo "<option value='$merkValue'>$merkValue</option>";
                       }
                       ?>
@@ -68,7 +68,9 @@
         $search = isset($_GET['search']) ? $_GET['search'] : '';
 
         // Query untuk mengambil data produk dari database dengan filter merk, pengurutan harga, dan pencarian nama_hp
-        $query = "SELECT * FROM data_hp INNER JOIN spek_hp ON data_hp.id_spek = spek_hp.id_spek WHERE merk LIKE '%$filterMerk%'";
+        $query = "SELECT * FROM data_hp 
+                  INNER JOIN brand ON data_hp.id_merk = brand.id_merk 
+                  WHERE nama_merk LIKE '%$filterMerk%'";
 
         if (!empty($search)) {
           $query .= " AND nama_hp LIKE '%$search%'";

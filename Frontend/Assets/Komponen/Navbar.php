@@ -16,24 +16,21 @@
           </li>
         <?php } ?>
       </ul>
-      <a href="Profil.php?id_user=<?= $_SESSION['id_user']; ?>">
-        <span class=" navbar-profile d-flex align-items-center gap-2">
-          <?php
+      <?php
+      if (isset($_SESSION['username'])) {
+        $username = $_SESSION['username'];
 
-
-          if (isset($_SESSION['username'])) {
-            $username = $_SESSION['username'];
-
-            $query = mysqli_query($koneksi, "SELECT * FROM user WHERE username='$username'");
-            $data = mysqli_fetch_array($query);
-          ?>
+        $query = mysqli_query($koneksi, "SELECT * FROM user WHERE username='$username'");
+        $data = mysqli_fetch_array($query);
+      ?>
+        <a href="Profil.php?id_user=<?= $_SESSION['id_user']; ?>">
+          <span class=" navbar-profile d-flex align-items-center gap-2">
             <img class="img-profile rounded-circle" src="Assets/img/<?= $data['photo'] ?>" alt="User">
             <h6 class="username"><?= $data['username']; ?></h6>
-          <?php } ?>
-        </span>
-      </a>
-      <a href="../keluar.php">Logout</a>
-      </a>
+          </span>
+        </a>
+        <a href="../keluar.php">Logout</a>
+      <?php } ?>
     </div>
   </div>
 </nav>

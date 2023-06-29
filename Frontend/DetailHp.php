@@ -51,7 +51,6 @@ error_reporting(E_ALL);
               $idHp = $_GET['id'];
 
               $query = mysqli_query($koneksi, "SELECT * FROM data_hp 
-                             INNER JOIN spek_hp ON data_hp.id_spek = spek_hp.id_spek
                              INNER JOIN brand ON data_hp.id_merk = brand.id_merk
                              WHERE data_hp.id_hp = $idHp");
               $data = mysqli_fetch_array($query);

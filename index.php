@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
       $_SESSION['level'] = $level; // Menyimpan level pengguna dalam session
 
       if ($level === 'Admin') {
-        header("Location: backend/");
+        header("Location: backend/index.php?page=home");
       } else {
         header("Location: frontend/home.php");
       }
