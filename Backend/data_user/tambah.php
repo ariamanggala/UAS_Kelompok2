@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-// Query untuk mendapatkan data level dari tabel level
+// Query untuk mendapatkan data level
 $queryLevel = "SELECT level FROM user";
 $resultLevel = mysqli_query($koneksi, $queryLevel);
 

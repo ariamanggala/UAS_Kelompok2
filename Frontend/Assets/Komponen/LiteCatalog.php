@@ -2,15 +2,17 @@
   <div class="container py-5">
     <div class="row py-5">
       <div class="col-12 d-flex justify-content-between align-items-center">
-        <h4>Short Catalog</h4>
-        <a class="link-catalog d-flex align-items-center" href="Catalog.php">Explore more here
+        <h4 class="sub-judul">Populer Products From
+          All Brands</h4>
+        <a class="link-catalog d-flex align-items-center" href="Catalog.php">
+          <p>View More</p>
           <iconify-icon icon="ph:arrow-right" class="icon-right"></iconify-icon></a>
       </div>
       <div class="swiper mySwiper pt-4">
         <div class="swiper-wrapper">
           <?php
           include "./../koneksi.php";
-          $query = mysqli_query($koneksi, "SELECT * FROM data_hp LIMIT 5");
+          $query = mysqli_query($koneksi, "SELECT * FROM data_hp LIMIT 7");
           if ($query) {
             if (mysqli_num_rows($query) > 0) {
               while ($data = mysqli_fetch_array($query)) {

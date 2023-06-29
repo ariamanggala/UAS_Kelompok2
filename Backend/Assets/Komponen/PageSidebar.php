@@ -83,7 +83,7 @@
            </a>
          </li>
          <li class="nav-item menu-open">
-           <a href="../index.php?page=data_header" class="nav-link  <?php if ($page == 'data_header') { ?>active<?php } ?>">
+           <a href="../index.php?page=header" class="nav-link  <?php if ($page == 'header') { ?>active<?php } ?>">
              <i class="nav-icon fas fa-tachometer-alt"></i>
              <p>
                Data Header
@@ -91,10 +91,18 @@
            </a>
          </li>
          <li class="nav-item menu-open">
-           <a href="../index.php?page=data_footer" class="nav-link  <?php if ($page == 'data_footer') { ?>active<?php } ?>">
+           <a href="../index.php?page=footer" class="nav-link  <?php if ($page == 'footer') { ?>active<?php } ?>">
              <i class="nav-icon fas fa-tachometer-alt"></i>
              <p>
                Data Footer
+             </p>
+           </a>
+         </li>
+         <li class="nav-item menu-open">
+           <a href="../index.php?page=artikel" class="nav-link  <?php if ($page == 'artikel') { ?>active<?php } ?>">
+             <i class="nav-icon fas fa-tachometer-alt"></i>
+             <p>
+               Data Artikel
              </p>
            </a>
          </li>

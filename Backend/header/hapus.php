@@ -1,12 +1,12 @@
 <?php
 include "../../koneksi.php";
 
-// Mengecek apakah parameter id_merk telah diterima
-if (isset($_GET['id_merk'])) {
-  $id_merk = $_GET['id_merk'];
+// Mengecek apakah parameter id_header telah diterima
+if (isset($_GET['id_header'])) {
+  $id_header = $_GET['id_header'];
 
-  // Query untuk menghapus Menu Navbar berdasarkan id_merk
-  $query = "DELETE FROM brand WHERE id_merk = '$id_merk'";
+  // Query untuk menghapus Menu Navbar berdasarkan id_header
+  $query = "DELETE FROM header WHERE id_header = '$id_header'";
   $result = mysqli_query($koneksi, $query);
 
   if ($result) {
@@ -15,7 +15,7 @@ if (isset($_GET['id_merk'])) {
     $_SESSION['alert'] = "Menu Navbar berhasil dihapus";
 
     // Redirect kembali ke halaman "user"
-    header("Location: ../index.php?page=brand");
+    header("Location: ../index.php?page=header");
     exit();
   } else {
     echo "Error: " . mysqli_error($koneksi);

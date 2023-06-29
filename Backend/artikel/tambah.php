@@ -14,38 +14,47 @@ if ($_SESSION['level'] === 'User') {
   exit();
 }
 
-$id_merk = $_GET['id_merk'];
-
-// Ambil data HP dari tabel user berdasarkan ID
-$queryBrand = "SELECT * FROM brand WHERE id_merk = '$id_merk'";
-$resultBrand = mysqli_query($koneksi, $queryBrand);
-$rowBrand = mysqli_fetch_assoc($resultBrand);
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nama_merk = $_POST['nama_merk'];
+  $judul_artikel = $_POST['judul_artikel'];
+  $content_artikel = $_POST['content_artikel'];
+  $cover = $_FILES['cover']['name'];
+  $waktu_dibuat = date('Y-m-d H:i:s', strtotime($_POST['waktu_dibuat']));
+  $slug = $_POST['slug'];
 
-  // Proses update data HP
-  $queryUpdateNavbar = "UPDATE brand SET nama_merk='$nama_merk' WHERE id_merk='$id_merk'";
-  $resultUpdateNavbar = mysqli_query($koneksi, $queryUpdateNavbar);
+  // Pengecekan apakah data Artikel sudah ada
+  $queryCheck = "SELECT * FROM artikel WHERE judul_artikel = '$judul_artikel'";
+  $resultCheck = mysqli_query($koneksi, $queryCheck);
 
-  // Proses unggah logo
-  if ($_FILES['logo']['name']) {
-    $namalogo = $_FILES['logo']['name'];
-    $namaSementaralogo = $_FILES['logo']['tmp_name'];
-    $pathlogo = "../../Frontend/Assets/img/" . $namalogo;
-    move_uploaded_file($namaSementaralogo, $pathlogo);
-
-    $queryUpdatelogo = "UPDATE brand SET logo='$namalogo' WHERE id_merk='$id_merk'";
-    $resultUpdatelogo = mysqli_query($koneksi, $queryUpdatelogo);
-  }
-
-  if ($resultUpdateNavbar) {
-    // Jika berhasil diupdate, redirect ke halaman data HP
-    header("Location: ../index.php?page=brand");
-    exit();
+  if (mysqli_num_rows($resultCheck) > 0) {
+    // Jika data Artikel sudah ada, tampilkan alert
+    echo "<script>alert('Data Artikel sudah ada.');</script>";
   } else {
-    echo "Error: " . mysqli_error($koneksi);
-    exit();
+    // Proses query untuk menambahkan data Artikel ke dalam tabel artikel
+    $queryDataArtikel = "INSERT INTO artikel (judul_artikel, content_artikel, cover, waktu_dibuat, slug)
+                  VALUES ('$judul_artikel', '$content_artikel', '$cover', '$waktu_dibuat', '$slug')";
+    $resultDataArtikel = mysqli_query($koneksi, $queryDataArtikel);
+
+    if ($resultDataArtikel) {
+      // Mendapatkan ID artikel yang baru saja di-generate
+      $idHp = mysqli_insert_id($koneksi);
+
+      // Lokasi folder tempat menyimpan gambar
+      $targetDir = "../../Frontend/Assets/img/";
+
+      // Upload Cover
+      $targetFileUtama = $targetDir . basename($cover);
+      move_uploaded_file($_FILES['cover']['tmp_name'], $targetFileUtama);
+
+      if ($resultDataArtikel) {
+        echo "<script>alert('Data Artikel berhasil ditambahkan.');</script>";
+        header("Location: ../index.php?page=artikel");
+        exit();
+      } else {
+        echo "<script>alert('Terjadi kesalahan saat menambahkan data Artikel.');</script>";
+      }
+    } else {
+      echo "<script>alert('Terjadi kesalahan saat menambahkan data Artikel.');</script>";
+    }
   }
 }
 ?>
@@ -90,20 +99,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
           <div class="row">
             <div class="col-md-6 offset-md-3">
-              <h3>Edit Data Brand</h3>
+              <h3>Tambah Data Artikel</h3>
               <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                  <label for="nama_merk" class="form-label">Nama User</label>
-                  <input type="text" class="form-control" id="nama_merk" name="nama_merk" value="<?php echo $rowBrand['nama_merk']; ?>" required>
+                  <label for="judul_artikel" class="form-label">Judul Artikel</label>
+                  <input type="text" class="form-control" id="judul_artikel" name="judul_artikel" required>
                 </div>
                 <div class="mb-3">
-                  <label for="logo" class="form-label">logo</label>
-                  <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                  <?php if ($rowBrand['logo']) : ?>
-                    <img src="../../Frontend/Assets/img/<?php echo $rowBrand['logo']; ?>" alt="logo" width="200">
-                  <?php endif; ?>
+                  <label for="content_artikel" class="form-label">content_artikel</label>
+                  <input type="text" class="form-control" id="content_artikel" name="content_artikel" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Data</button>
+                <div class="mb-3">
+                  <label for="cover" class="form-label">Cover</label>
+                  <input type="file" class="form-control" id="cover" name="cover" required>
+                </div>
+                <div class="mb-3">
+                  <label for="waktu_dibuat" class="form-label">Waktu</label>
+                  <input type="datetime-local" class="form-control" id="waktu_dibuat" name="waktu_dibuat" required>
+                </div>
+                <div class="mb-3">
+                  <label for="slug" class="form-label">slug</label>
+                  <input type="text" class="form-control" id="slug" name="slug" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Tambah Data</button>
               </form>
             </div>
           </div>
@@ -122,26 +140,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Main Footer -->
     <footer class="main-footer">
-      <!-- To the right -->
-      <div class="float-right d-none d-sm-inline">
-        Anything you want
-      </div>
       <!-- Default to the left -->
-      <strong>Footer Section</strong>
+      <strong>Powered by <a href="https://openai.com/">OpenAI</a></strong>
     </footer>
   </div>
   <!-- ./wrapper -->
 
   <!-- REQUIRED SCRIPTS -->
-
   <!-- jQuery -->
   <script src="../plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
+  <!-- Bootstrap -->
   <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- overlayScrollbars -->
   <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="../dist/js/adminlte.min.js"></script>
+  <script src="../dist/js/adminlte.js"></script>
+
   <!-- PAGE PLUGINS -->
   <!-- jQuery Mapael -->
   <script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
@@ -155,6 +169,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="../dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="../dist/js/pages/dashboard2.js"></script>
+  <script>
+    function confirmDelete() {
+      if (confirm('Anda yakin menghapus data?')) {
+        //action confirmed
+        alert('Data berhasil dihapus');
+      } else {
+        //action cancelled
+        alert('Data batal dihapus');
+      }
+    }
+  </script>
 </body>
 
 </html>

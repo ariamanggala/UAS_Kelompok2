@@ -14,34 +14,37 @@ if ($_SESSION['level'] === 'User') {
   exit();
 }
 
-$id_merk = $_GET['id_merk'];
+$id_artikel = $_GET['id_artikel'];
 
-// Ambil data HP dari tabel user berdasarkan ID
-$queryBrand = "SELECT * FROM brand WHERE id_merk = '$id_merk'";
-$resultBrand = mysqli_query($koneksi, $queryBrand);
-$rowBrand = mysqli_fetch_assoc($resultBrand);
+// Ambil data Artikel dari tabel artikel berdasarkan ID
+$queryHp = "SELECT * FROM artikel WHERE id_artikel = '$id_artikel'";
+$resultHp = mysqli_query($koneksi, $queryHp);
+$rowArtikel = mysqli_fetch_assoc($resultHp);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nama_merk = $_POST['nama_merk'];
+  $judul_artikel = $_POST['judul_artikel'];
+  $content_artikel = $_POST['content_artikel'];
+  $waktu_dibuat = date('Y-m-d H:i:s', strtotime($_POST['waktu_dibuat']));
+  $slug = $_POST['slug'];
 
-  // Proses update data HP
-  $queryUpdateNavbar = "UPDATE brand SET nama_merk='$nama_merk' WHERE id_merk='$id_merk'";
-  $resultUpdateNavbar = mysqli_query($koneksi, $queryUpdateNavbar);
+  // Proses update data Artikel
+  $queryUpdateHp = "UPDATE artikel SET judul_artikel='$judul_artikel', content_artikel='$content_artikel', slug='$slug' WHERE id_artikel='$id_artikel'";
+  $resultUpdateHp = mysqli_query($koneksi, $queryUpdateHp);
 
-  // Proses unggah logo
-  if ($_FILES['logo']['name']) {
-    $namalogo = $_FILES['logo']['name'];
-    $namaSementaralogo = $_FILES['logo']['tmp_name'];
-    $pathlogo = "../../Frontend/Assets/img/" . $namalogo;
-    move_uploaded_file($namaSementaralogo, $pathlogo);
+  // Proses unggah gambar utama
+  if ($_FILES['cover']['name']) {
+    $namaGambarUtama = $_FILES['cover']['name'];
+    $namaSementaraGambarUtama = $_FILES['cover']['tmp_name'];
+    $pathGambarUtama = "../../Frontend/Assets/img/" . $namaGambarUtama;
+    move_uploaded_file($namaSementaraGambarUtama, $pathGambarUtama);
 
-    $queryUpdatelogo = "UPDATE brand SET logo='$namalogo' WHERE id_merk='$id_merk'";
-    $resultUpdatelogo = mysqli_query($koneksi, $queryUpdatelogo);
+    $queryUpdateGambarUtama = "UPDATE artikel SET cover='$namaGambarUtama' WHERE id_artikel='$id_artikel'";
+    $resultUpdateGambarUtama = mysqli_query($koneksi, $queryUpdateGambarUtama);
   }
 
-  if ($resultUpdateNavbar) {
-    // Jika berhasil diupdate, redirect ke halaman data HP
-    header("Location: ../index.php?page=brand");
+  if ($resultUpdateHp) {
+    // Jika berhasil diupdate, redirect ke halaman data Artikel
+    header("Location: ../index.php?page=artikel");
     exit();
   } else {
     echo "Error: " . mysqli_error($koneksi);
@@ -90,18 +93,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
           <div class="row">
             <div class="col-md-6 offset-md-3">
-              <h3>Edit Data Brand</h3>
+              <h3>Edit Data Artikel</h3>
               <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                  <label for="nama_merk" class="form-label">Nama User</label>
-                  <input type="text" class="form-control" id="nama_merk" name="nama_merk" value="<?php echo $rowBrand['nama_merk']; ?>" required>
+                  <label for="judul_artikel" class="form-label">Judul Artikel</label>
+                  <input type="text" class="form-control" id="judul_artikel" name="judul_artikel" value="<?php echo $rowArtikel['judul_artikel']; ?>" required>
                 </div>
                 <div class="mb-3">
-                  <label for="logo" class="form-label">logo</label>
-                  <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                  <?php if ($rowBrand['logo']) : ?>
-                    <img src="../../Frontend/Assets/img/<?php echo $rowBrand['logo']; ?>" alt="logo" width="200">
+                  <label for="content_artikel" class="form-label">content_artikel</label>
+                  <input type="text" class="form-control" id="content_artikel" name="content_artikel" value="<?php echo $rowArtikel['content_artikel']; ?>" required>
+                </div>
+                <div class="mb-3">
+                  <label for="cover" class="form-label">cover</label>
+                  <input type="file" class="form-control" id="cover" name="cover" accept="image/*">
+                  <?php if ($rowArtikel['cover']) : ?>
+                    <img src="../../Frontend/Assets/img/<?php echo $rowArtikel['cover']; ?>" alt="cover" width="200">
                   <?php endif; ?>
+                </div>
+                <div class="mb-3">
+                  <label for="waktu_dibuat" class="form-label">Waktu</label>
+                  <input type="datetime-local" class="form-control" id="waktu_dibuat" name="waktu_dibuat" value="<?php echo $rowArtikel['waktu_dibuat']; ?>" required readonly>
+
+                </div>
+                <div class="mb-3">
+                  <label for="slug" class="form-label">slug</label>
+                  <input type="text" class="form-control" id="slug" name="slug" value="<?php echo $rowArtikel['slug']; ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Data</button>
               </form>

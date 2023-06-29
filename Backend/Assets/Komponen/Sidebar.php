@@ -100,6 +100,14 @@ $page = $_GET['page'];
             </p>
           </a>
         </li>
+        <li class="nav-item menu-open">
+          <a href="index.php?page=artikel" class="nav-link  <?php if ($page == 'artikel') { ?>active<?php } ?>">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Data artikel
+            </p>
+          </a>
+        </li>
 
       </ul>
     </nav>

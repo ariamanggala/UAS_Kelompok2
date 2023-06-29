@@ -2,33 +2,39 @@
   <div class="container py-3">
     <div class="row py-5">
       <div class="col-md-12">
-        <h1 class="header-title">Discover Premium and Affordable Smartphone Collections.</h1>
+        <h1 class="header-title text-center">Your Ultimate Online Destination for Cutting-Edge Smartphones.</h1>
       </div>
     </div>
-    <div class="row d-flex justify-content-between">
-      <?php
-      include "./../koneksi.php";
-      $query = mysqli_query($koneksi, "SELECT * FROM header");
-      while ($data = mysqli_fetch_array($query)) {
-      ?>
+    <div class="row d-flex justify-content-between header-carousel">
+      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <?php
+          include './../koneksi.php';
+          $query = "SELECT image_header FROM header";
+          $result = mysqli_query($koneksi, $query);
 
-        <div class="col-md-7 header-first" style="background-image: url(Assets/img/<?= $data['photo1']; ?>);">
-          <div class="teks">
-            <h4>Smartphone Store</h4>
-            <h5>Experience the Latest Smartphone Technology at Unbeatable Prices.</h5>
-          </div>
-          <a class="button" href="Catalog.php">Buy Now</a>
+          if (mysqli_num_rows($result) > 0) {
+            $activeClass = "active";
+            while ($data = mysqli_fetch_assoc($result)) {
+          ?>
+              <div class="carousel-item <?php echo $activeClass; ?>">
+                <img src="Assets/img/<?php echo $data['image_header'] ?>" class="d-block w-100 image-header" alt="Header">
+              </div>
+          <?php
+              $activeClass = "";
+            }
+          }
+          ?>
         </div>
-
-        <div class="col-md-4 header-second" style="background-image: url(Assets/img/<?= $data['photo2']; ?>);">
-          <div class="teks">
-            <h4>See the Latest Articles</h4>
-            <h5>Let's Know More About the Trend Now.</h5>
-          </div>
-          <a class="button" href="Catalog.php">See Article</a>
-
-        </div>
-      <?php } ?>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>

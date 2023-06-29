@@ -5,7 +5,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'user';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Query awal untuk mengambil data dari tabel user
-$query = "SELECT id_merk, nama_merk, logo FROM brand";
+$query = "SELECT id_header, image_header FROM header";
 
 // Pencarian
 if (!empty($search)) {
@@ -20,11 +20,11 @@ if (!$result) {
 
 ?>
 
-<section id="Brand">
+<section id="Header">
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Data Brand</h1>
+        <h1 class="m-0">Data header</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
     <div class="row d-flex justify-content-center">
@@ -32,22 +32,13 @@ if (!$result) {
         <div class="table-responsive">
           <form method="GET" action="">
             <input type="hidden" name="page" value="<?php echo $page; ?>">
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan nama brand" value="<?php echo $search; ?>">
-              </div>
-              <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Cari</button>
-              </div>
-            </div>
           </form>
-          <a href="brand/tambah.php?page=brand" class="btn btn-primary">Tambah</a>
+          <a href="header/tambah.php?page=header" class="btn btn-primary">Tambah</a>
           <table class="table table-striped" border="1">
             <thead>
               <tr class="text-center">
                 <th>No.</th>
-                <th>nama_merk</th>
-                <th>logo</th>
+                <th>image_header</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -55,17 +46,15 @@ if (!$result) {
               <?php
               $no = 1;
               while ($row = mysqli_fetch_assoc($result)) {
-                $Id_merk = $row['id_merk'];
-                $nama_merk = $row['nama_merk'];
-                $logo = $row['logo'];
+                $Id_header = $row['id_header'];
+                $image_header = $row['image_header'];
               ?>
                 <tr>
                   <td><?php echo $no; ?></td>
-                  <td><?php echo $nama_merk; ?></td>
-                  <td><img src="../frontend/assets/img/<?php echo $logo; ?>" alt="logo" width="70"></td>
+                  <td><img src="../frontend/assets/img/<?php echo $image_header; ?>" alt="image_header" width="300"></td>
                   <td>
-                    <a class="btn btn-warning" href="brand/edit.php?id_merk=<?php echo $Id_merk; ?>&page=brand">Edit Akun</a>
-                    <a class="btn btn-danger" href="brand/hapus.php?id_merk=<?php echo $Id_merk; ?>&page=brand" onclick='return confirmDelete()'>Hapus</a>
+                    <a class="btn btn-warning" href="header/edit.php?id_header=<?php echo $Id_header; ?>&page=header">Edit Akun</a>
+                    <a class="btn btn-danger" href="header/hapus.php?id_header=<?php echo $Id_header; ?>&page=header" onclick='return confirmDelete()'>Hapus</a>
                   </td>
                 </tr>
               <?php $no++;

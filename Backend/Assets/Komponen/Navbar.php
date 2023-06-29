@@ -1,10 +1,10 @@
     <nav class="main-header navbar navbar-expand navbar-dark">
       <!-- Left navbar links -->
-      <ul class="navbar-nav">
+      <!-- <ul class="navbar-nav">
         <li class="nav-item">
           <h6>Hello Admin:v</h6>
         </li>
-      </ul>
+      </ul> -->
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
@@ -18,9 +18,9 @@
             <i class="fas fa-th-large"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../keluar.php" role="button">
-            keluar
+        <li class="nav-link8">
+          <a href="../keluar.php">
+            Keluar
           </a>
         </li>
       </ul>

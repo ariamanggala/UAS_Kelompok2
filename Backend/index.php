@@ -10,7 +10,6 @@ if ($_SESSION['level'] === 'User') {
   header("Location: ../frontend/home.php");
   exit();
 } elseif ($_SESSION['level'] === 'Admin') {
-
 } else {
   header("Location: ../index.php");
   exit();
@@ -39,9 +38,9 @@ if ($_SESSION['level'] === 'User') {
   <div class="wrapper">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
+    <!-- <div class="preloader flex-column justify-content-center align-items-center">
       <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </div>
+    </div> -->
 
     <!-- Navbar -->
     <?php include "Assets/Komponen/Navbar.php" ?>
@@ -88,6 +87,18 @@ if ($_SESSION['level'] === 'User') {
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
 
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="dist/js/demo.js"></script>
+
+
   <!-- PAGE PLUGINS -->
   <!-- jQuery Mapael -->
   <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
@@ -114,6 +125,7 @@ if ($_SESSION['level'] === 'User') {
       }
     }
   </script>
+
 </body>
 
 </html>

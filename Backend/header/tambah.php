@@ -6,25 +6,24 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nama_merk = $_POST['nama_merk'];
-  $logo = $_FILES['logo']['name'];
+  $image_header = $_FILES['image_header']['name'];
 
   // Lokasi folder tempat menyimpan gambar
   $targetDir = "../../Frontend/Assets/img/";
-  // Upload Logo
-  $targetFileLogo = $targetDir . basename($logo);
-  move_uploaded_file($_FILES['logo']['tmp_name'], $targetFileLogo);
+  // Upload image_header
+  $targetFileimage_header = $targetDir . basename($image_header);
+  move_uploaded_file($_FILES['image_header']['tmp_name'], $targetFileimage_header);
 
   // Insert data into the user table
-  $queryInsertBrand = "INSERT INTO brand (id_merk, nama_merk, logo) VALUES ('$id_merk', '$nama_merk', '$logo')";
-  $resultInsertUser = mysqli_query($koneksi, $queryInsertBrand);
+  $queryInsertheader = "INSERT INTO header (id_header, image_header) VALUES ('$id_header', '$image_header')";
+  $resultInsertUser = mysqli_query($koneksi, $queryInsertheader);
 
   if ($resultInsertUser) {
-    echo "<script>alert('Data brand berhasil ditambahkan.');</script>";
-    header("Location: ../index.php?page=brand");
+    echo "<script>alert('Data header berhasil ditambahkan.');</script>";
+    header("Location: ../index.php?page=header");
     exit();
   } else {
-    echo "<script>alert('Terjadi kesalahan saat menambahkan data brand.');</script>";
+    echo "<script>alert('Terjadi kesalahan saat menambahkan data header.');</script>";
   }
 }
 ?>
@@ -52,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__wobble" src="../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__wobble" src="../dist/img/AdminLTElogo.png" alt="AdminLTElogo" height="60" width="60">
     </div>
 
     <!-- Navbar -->
@@ -69,15 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
           <div class="row">
             <div class="col-md-6 offset-md-3">
-              <h3>Tambah Data Brand</h3>
+              <h3>Tambah Data header</h3>
               <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                  <label for="nama_merk" class="form-label">Nama Brand</label>
-                  <input type="text" class="form-control" id="nama_merk" name="nama_merk" required>
-                </div>
-                <div class="mb-3">
-                  <label for="logo" class="form-label">Logo</label>
-                  <input type="file" class="form-control" id="logo" name="logo" required>
+                  <label for="image_header" class="form-label">Image Carousel Header</label>
+                  <input type="file" class="form-control" id="image_header" name="image_header" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Tambah Data</button>
               </form>

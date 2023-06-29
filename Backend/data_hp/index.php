@@ -19,6 +19,21 @@ if (!$result) {
   echo "Error: " . mysqli_error($koneksi);
   exit();
 }
+
+// Pagination
+$batas = 5; // Jumlah data per halaman
+$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1; // Halaman aktif
+$mulai = ($halaman - 1) * $batas; // Menentukan nomor data awal yang akan ditampilkan
+
+$query_pagination = $query . " LIMIT $mulai, $batas";
+$result_pagination = mysqli_query($koneksi, $query_pagination);
+if (!$result_pagination) {
+  echo "Error: " . mysqli_error($koneksi);
+  exit();
+}
+
+$total_data = mysqli_num_rows($result); // Total jumlah data
+$total_halaman = ceil($total_data / $batas); // Total jumlah halaman
 ?>
 
 <section id="DataHP">
@@ -63,8 +78,8 @@ if (!$result) {
             </thead>
             <tbody>
               <?php
-              $no = 1;
-              while ($row = mysqli_fetch_assoc($result)) { ?>
+              $no = $mulai + 1;
+              while ($row = mysqli_fetch_assoc($result_pagination)) { ?>
                 <tr>
                   <td><?php echo $no; ?></td>
                   <td><?php echo $row['nama_hp']; ?></td>
@@ -81,13 +96,39 @@ if (!$result) {
                   <td>
                     <a class="btn btn-warning" href="data_hp/edit.php?id_hp=<?php echo $row['id_hp']; ?>&page=data_hp">Edit Akun</a>
                     <a class="btn btn-danger" href="data_hp/hapus.php?id_hp=<?php echo $row['id_hp']; ?>&page=data_hp" onclick='return confirmDelete()'>Hapus</a>
-
                   </td>
                 </tr>
               <?php $no++;
               } ?>
             </tbody>
           </table>
+
+          <!-- Pagination -->
+          <ul class="pagination justify-content-center">
+            <?php if ($halaman > 1) : ?>
+              <li class="page-item">
+                <a class="page-link" href="?page=<?php echo $page; ?>&search=<?php echo $search; ?>&halaman=<?php echo $halaman - 1; ?>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>
+              <?php if ($i == $halaman) : ?>
+                <li class="page-item active"><a class="page-link" href="#"><?php echo $i; ?></a></li>
+              <?php else : ?>
+                <li class="page-item"><a class="page-link" href="?page=<?php echo $page; ?>&search=<?php echo $search; ?>&halaman=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+              <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($halaman < $total_halaman) : ?>
+              <li class="page-item">
+                <a class="page-link" href="?page=<?php echo $page; ?>&search=<?php echo $search; ?>&halaman=<?php echo $halaman + 1; ?>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <?php endif; ?>
+          </ul>
         </div>
       </div>
     </div>
